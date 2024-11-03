@@ -14,38 +14,29 @@ datasource db {
 }
 
 model User {
-  id String @id @default(cuid())
-  username String @unique
-  password String 
+  id        String       @id @default(cuid())
+  username  String       @unique
+  password  String
   watchlist Watchlist[]
 }
-
 model Watchlist {
-  id      String      @id @default(uuid())
-  userId  String
-  user    User        @relation(fields: [userId], references: [id], onDelete: Cascade)
-  items   Json?       // Storing the array of watchList items as JSON
-
-  backdrop_path     String?
-  mal_id            String?
-  mdl_id            String?
-  title_english     String?
-  synopsis          String?
+  id                String    @id @default(cuid())
+  userId            String
+  user              User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  movie_id          String    // Stores the unique 'id' from the API response
   title             String?
-  name              String?
   original_title    String?
   overview          String?
   poster_path       String?
-  media_type        String?
-  adult             Boolean?
+  backdrop_path     String?
   original_language String?
-  genre_ids         Int[]
-  popularity        String?
   release_date      String?
-  video             String?
-  vote_average      String?
-  vote_count        String?
-  poster_url        String?
-  description       String?
-  images            Json?
+  adult             Boolean?
+  genre_ids         Int[]
+  popularity        Float?    // Adjusted to float for numerical values
+  vote_average      Float?
+  vote_count        Int?
+  video             Boolean?
+
+  @@unique([userId, movie_id]) // Ensures each movie is unique in a user's watchlist
 }
