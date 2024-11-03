@@ -1,0 +1,51 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id String @id @default(cuid())
+  username String @unique
+  password String 
+  watchlist Watchlist[]
+}
+
+model Watchlist {
+  id      String      @id @default(uuid())
+  userId  String
+  user    User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items   Json?       // Storing the array of watchList items as JSON
+
+  backdrop_path     String?
+  mal_id            String?
+  mdl_id            String?
+  title_english     String?
+  synopsis          String?
+  title             String?
+  name              String?
+  original_title    String?
+  overview          String?
+  poster_path       String?
+  media_type        String?
+  adult             Boolean?
+  original_language String?
+  genre_ids         Int[]
+  popularity        String?
+  release_date      String?
+  video             String?
+  vote_average      String?
+  vote_count        String?
+  poster_url        String?
+  description       String?
+  images            Json?
+}
