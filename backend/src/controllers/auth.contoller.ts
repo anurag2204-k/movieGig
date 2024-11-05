@@ -8,6 +8,7 @@ import generateToken from "../utils/generateToken.js";
 interface SignupRequestBody {
     username: string;
     password: string;
+	email: string;
 }
 
 // Define the handlers with RequestHandler type
@@ -37,6 +38,7 @@ export const signin = async (req: Request, res: Response) =>{
 		res.status(200).json({
 			id: user.id,
 			username: user.username,
+			email:user.email,
 		});
     }catch(error){
         console.error("Error in signin:", error);
@@ -46,10 +48,10 @@ export const signin = async (req: Request, res: Response) =>{
 
 export const signup = async (req: Request, res: Response)=> {
     try {
-        const { username, password } = req.body;
+        const { username, password, email} = req.body;
 
-        if (!username || !password) {
-            res.status(400).json({ error: "Username and password are required" });
+        if (!username || !password || !email) {
+            res.status(400).json({ error: "Username, email and password are required" });
             return;
             
         }
@@ -65,7 +67,8 @@ export const signup = async (req: Request, res: Response)=> {
         const newUser = await prisma.user.create({
 			data: {
 				username,
-				password: hashedPassword
+				password: hashedPassword,
+				email,
 			},
 		});
 
@@ -75,6 +78,7 @@ export const signup = async (req: Request, res: Response)=> {
 			generateToken(newUser.id, res);
 
 			res.status(201).json({
+				email,
 				id: newUser.id,
 				username: newUser.username,
 			});
@@ -108,6 +112,7 @@ export const getMe = async (req: Request, res: Response) => {
 		}
 
 		res.status(200).json({
+			email:user.email,
 			id: user.id,
 			username: user.username,
 		});
