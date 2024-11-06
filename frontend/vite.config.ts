@@ -10,5 +10,8 @@ export default defineConfig({
         target: 'http://localhost:3000',
       }
     }
-  }
+  },
+  define: {
+    __VITE_ENV__: JSON.stringify(process.env),
+  },
 })

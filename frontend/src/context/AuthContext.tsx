@@ -37,7 +37,6 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
                 }
                 
                 setAuthUser(data);
-				console.log(data)
             } catch (error: any) {
                 console.error("Failed to fetch authenticated user:", error);
                 // Optionally, show a toast notification here
