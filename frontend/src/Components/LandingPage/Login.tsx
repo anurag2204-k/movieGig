@@ -53,7 +53,7 @@ const Login = () => {
 						href="/"
 						className="flex items-center mb-6 text-4xl 3xl:text-5xl font-koulen font-bold text-text"
 					>
-						STREAMSAGE
+						MOVIEGIG
 					</a>
 					<div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-bglight dark:border-gray-900">
 						<div className="p-6 space-y-4 md:space-y-6 sm:p-8">

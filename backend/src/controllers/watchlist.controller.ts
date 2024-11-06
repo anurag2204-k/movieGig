@@ -4,7 +4,13 @@ import prisma from "../db/prisma.js";
 export const add = async (req: Request, res: Response) => {
     try {
         const movieData = req.body.movie;
-        const userId = req.user.id;
+        const userId = req.user.id;  // Access userId from request body
+
+        if (!userId) {
+            res.status(401).json({ error: "User ID is missing. Unauthorized" });
+            return
+        }
+
 
         // Extract movie's unique ID and other relevant fields from movieData
         const {
@@ -33,7 +39,7 @@ export const add = async (req: Request, res: Response) => {
         });
 
         if (existingMovie) {
-            res.status(400).json({ error: "Movie already exists in watchlist" });
+            res.status(202).json({ error: "Movie already exists in watchlist" });
             return;
         }
 

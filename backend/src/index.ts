@@ -11,7 +11,10 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(cors())
+app.use(cors({
+    origin: 'http://localhost:5173', // Frontend UR
+    credentials: true,  // Allow sending cookies
+  }));
 
 app.get('/',(req,res)=>{
     res.send("Welcome to MovieGig API!");

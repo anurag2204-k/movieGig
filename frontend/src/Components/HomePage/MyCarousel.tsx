@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { useAuthContext } from "../../context/AuthContext";
+import toast from "react-hot-toast";
+import axios from "axios";
 
 interface movieProps {
 	backdrop_path: string;         // URL path to the backdrop image
@@ -26,6 +29,8 @@ const MyCarousel = ({movies}:myCarouselProps) => {
 	const [index, setIndex] = useState(0);
 	const cardsPerView = 6;
 	const length = movies.length;
+	const {authUser}=useAuthContext();
+	const userId= authUser? authUser.id:null;
 	// const token = localStorage.getItem("token"); // Ensure token is retrieved from localStorage
 
 	const handlePrevious = () => {
@@ -37,40 +42,33 @@ const MyCarousel = ({movies}:myCarouselProps) => {
 		const newIndex = index + cardsPerView;
 		setIndex(newIndex >= length ? 0 : newIndex);
 	};
+	const addToList = async (movie:movieProps) => {
+		try {
+		  if (!userId) {
+			toast.error("User not authenticated. Please sign in.");
+			return;
+		  }
+	  
+		  const response = await axios.post(
+			"http://localhost:3000/api/watchlist/add",
+			{ movie, userId },
+			{ withCredentials: true }  // Ensure cookies are sent with the request
+		  );
+	  
+		  if (response.status === 202) {
+			toast("Already exists in watchlist!", { icon: "👏" });
+		  } else if (response.status === 201) {
+			toast("Added to watchlist!", { icon: "✅" });
+		  } else {
+			toast.error("Failed to add movie to watchlist");
+		  }
+		} catch (error) {
+		  toast.error("Failed to add movie to watchlist");
+		  console.error("Error:", error);
+		}
+	  };
 
-	const addToList=(movie:movieProps)=>{
-		console.log(movie)
-	}
-
-	// const addToList = (movies) => {
-	// 	fetch("https://streamsage-1.onrender.com/api/v1/watchlist/add", {
-	// 		method: "POST",
-	// 		headers: {
-	// 			"Content-Type": "application/json",
-	// 			authorization: `Bearer ${token}`,
-	// 		},
-	// 		body: JSON.stringify({
-	// 			movies: movies,
-	// 		}),
-	// 	})
-	// 		.then((res) => res.json())
-	// 		.then((data) => console.log(data))
-	// 		.catch((err) => console.log(err));
-	// 	alert("Added to Watchlist");
-	// };
-
-	// const removeFromList = async (Id) => {
-	//     const response = await axios.put("/api/v1/watchlist/remove" ,{
-	//       headers: {
-	//       'Content-Type': 'application/json',
-	//       'authorization': `Bearer ${token}`,
-	//     },
-	//       body : {
-	//         'Id' : Id,
-	//       }
-	//     } );
-	//     console.log(response.data);
-	// }
+	// 
 
 	return (
 		<div className="flex items-center justify-center w-full relative bg-background">
@@ -105,7 +103,7 @@ const MyCarousel = ({movies}:myCarouselProps) => {
 								<img
 									src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
 									alt={movie.title}
-									className="w-full h-80 object-cover rounded-xl shadow-lg"
+									className="w-full h-80 object-cover rounded-xl shadow-lg "
 								/>
 							</div>
 							<div className="pt-4">
