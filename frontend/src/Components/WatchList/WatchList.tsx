@@ -136,7 +136,7 @@ const WatchList = () => {
                                             </div>
 
                                             <div
-                                                className="self-center flex-1 text-red-300 border border-gray-400 rounded text-center px-4 py-2 m-2 md:max-w-32"
+                                                className="self-center flex-1 text-red-300 border border-gray-400 rounded text-center px-4 py-2 m-2 md:max-w-32 hover:cursor-pointer"
                                                 onClick={(e) => {
                                                     e.stopPropagation();
                                                     e.preventDefault()
