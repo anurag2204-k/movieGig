@@ -146,7 +146,7 @@ const Signup = () => {
 											I accept the{" "}
 											<a
 												className="font-medium text-primary hover:underline dark:text-primary"
-												href="https://github.com/Rutetid/StreamSage/blob/main/frontend/T%26C.md"
+												href="https://github.com/anurag2204-k/movieGig/blob/main/terms.md"
 											>
 												Terms and Conditions
 											</a>
