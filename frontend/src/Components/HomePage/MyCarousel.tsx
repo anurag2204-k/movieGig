@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import { useAuthContext } from "../../context/AuthContext";
 import toast from "react-hot-toast";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 interface movieProps {
+	name:string;
+	original_name:string;
 	backdrop_path: string;         // URL path to the backdrop image
 	id: number;                    // Unique identifier for the movie
 	title: string;                 // Movie title
@@ -31,7 +34,15 @@ const MyCarousel = ({movies}:myCarouselProps) => {
 	const length = movies.length;
 	const {authUser}=useAuthContext();
 	const userId= authUser? authUser.id:null;
+	const navigate=  useNavigate()
 	// const token = localStorage.getItem("token"); // Ensure token is retrieved from localStorage
+
+	const goToTab=(movie:movieProps)=>{
+		console.log(movie.id);
+		toast(movie.original_title? movie.original_title:movie.name, {
+			icon: '🎬',
+		  });
+	}
 
 	const handlePrevious = () => {
 		const newIndex = index - cardsPerView;
@@ -56,9 +67,9 @@ const MyCarousel = ({movies}:myCarouselProps) => {
 		  );
 	  
 		  if (response.status === 202) {
-			toast("Already exists in watchlist!", { icon: "👏" });
+			toast(`${movie.original_title? movie.original_title:movie.name	} already exists in watchlist!`, { icon: "🎞️" });
 		  } else if (response.status === 201) {
-			toast("Added to watchlist!", { icon: "✅" });
+			toast(`${movie.original_title? movie.original_title:movie.name	} added to watchlist!` , { icon: "✅" });
 		  } else {
 			toast.error("Failed to add movie to watchlist");
 		  }
@@ -88,7 +99,7 @@ const MyCarousel = ({movies}:myCarouselProps) => {
 					}}
 				>
 					{movies.map((movie:movieProps) => (
-						<div key={movie.id} className="flex-shrink-0 w-1/6 p-1">
+						<div key={movie.id} className="flex-shrink-0 w-1/6 p-1" onClick={()=>goToTab(movie)}>
 							<div className="bg-gray-900 rounded-xl shadow-lg relative">
 								<button
 									type="button"
@@ -102,13 +113,13 @@ const MyCarousel = ({movies}:myCarouselProps) => {
 								</button>
 								<img
 									src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-									alt={movie.title}
+									alt={movie.original_title? movie.original_title:movie.name}
 									className="w-full h-80 object-cover rounded-xl shadow-lg "
 								/>
 							</div>
 							<div className="pt-4">
 								<span className="text-text text-sm font-poppins font-semibold">
-									{movie.title }
+									{movie.original_title? movie.original_title:movie.name }
 								</span>
 							</div>
 						</div>

@@ -7,6 +7,8 @@ import Footer from "../HomePage/Footer";
 import toast from "react-hot-toast";
 
 interface movieProps {
+    name: string;
+    original_name:string;
     backdrop_path: string;         // URL path to the backdrop image
     id: string;                    // Unique identifier for the movie
     title: string;                 // Movie title
@@ -112,17 +114,17 @@ const WatchList = () => {
                                 <div
                                     className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xxl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
                                     onClick={() => {
-                                        console.log('Movie info:', movie.title);
+                                        console.log('Movie info:', movie.original_title? movie.original_title:movie.name);
                                     }}
                                 >
                                     <img
                                         className="object-cover h-96 w-auto rounded-t-lg p-3 md:p-0 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg"
                                         src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                                        alt={movie.title}
+                                        alt={movie.original_title? movie.original_title:movie.name}
                                     />
                                     <div>
                                         <div className="flex flex-col justify-between p-4 leading-normal">
-                                            <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{movie.original_title}</h5>
+                                            <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{movie.original_title? movie.original_title:movie.name}</h5>
                                             <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{movie.overview}</p>
                                         </div>
                                         <div className="flex items-stretch justify-around py-5">
@@ -140,7 +142,7 @@ const WatchList = () => {
                                                 onClick={(e) => {
                                                     e.stopPropagation();
                                                     e.preventDefault()
-                                                    console.log('Remove movie:', movie.title);
+                                                    console.log('Remove movie:', movie.original_title? movie.original_title:movie.name);
                                                     removeItem(movie.id)
                                                 }}
                                             >

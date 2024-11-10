@@ -1,15 +1,39 @@
 import Card from "./Card";
 import { Link } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAuthContext } from "../../context/AuthContext";
 import useLogout from "../../hooks/useLogout";
+import axios from "axios";
+import toast from "react-hot-toast";
+import Footer from "../HomePage/Footer";
 
 function LandingPage() {
+
+    const [isAvaliable, setIsAvaliable] =useState(true);
     const { authUser, isLoading } = useAuthContext();
 	const {logout}= useLogout();
 		const handleLogout	= async()=>{
 		await logout()
 	}
+
+    useEffect(()=>{
+     
+            const avail = async()=>{
+                const res = await axios.get("https://www.themoviedb.org");
+                if(res.status!==200)
+                {
+                    setIsAvaliable(false);
+                    toast.error("https://www.themoviedb.org is not reachable through your service provider")
+                }
+                    
+            }
+
+            avail();
+            
+        
+    },[])
+
+
     
     // Show a loading state if auth data is still loading
     // if (isLoading) return <div>Loading...</div>;
@@ -69,6 +93,8 @@ function LandingPage() {
                 <Card img={WebSeries} genre={"Web Series"} />
                 <Card img={Anime} genre={"Anime"} /> */}
             </div>
+
+            <Footer/>
         </div>
     );
 }

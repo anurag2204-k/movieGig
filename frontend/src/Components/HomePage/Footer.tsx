@@ -75,7 +75,9 @@ export default function Footer() {
 
 
                 </div>
-                <span className="text-lg text-gray-500 text-center block">Thank YOU for visiting.</span>
+                <span className="animate-text bg-gradient-to-r from-teal-500 via-purple-500 to-orange-500 bg-clip-text text-transparent text-lg font-black text-center block">Thank YOU for visiting.</span>
+                
+
             </div>
         </div>
     </footer>

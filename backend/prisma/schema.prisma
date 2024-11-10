@@ -28,8 +28,10 @@ model Watchlist {
   userId            String
   user              User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   movie_id          String    // Stores the unique 'id' from the API response
+  name              String?
   title             String?
   original_title    String?
+  original_name     String?
   overview          String?
   poster_path       String?
   backdrop_path     String?

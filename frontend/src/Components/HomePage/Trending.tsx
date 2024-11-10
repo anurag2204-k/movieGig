@@ -3,6 +3,8 @@ import MyCarousel from "./MyCarousel";
 import axios from "axios";
 
 interface MovieProps {
+  name: string;
+  original_name:string;
   backdrop_path: string;
   id: number;
   title: string;
@@ -41,6 +43,7 @@ const Trending = ({what}:TrendingProps) => {
           }
         );
         setMovies(data.results);
+        console.log(data.results);
       } catch (error) {
         console.error("An error occurred while fetching trending movies.", error);
         setError("An error occurred while fetching trending movies.");
