@@ -21,9 +21,7 @@ app.use(cors({
     credentials: true,  // Allow sending cookies
   }));
 
-app.get('/',(req,res)=>{
-    res.send("Welcome to MovieGig API!");
-})
+
 app.use('/api/auth', authRoutes);
 app.use('/api/watchlist', watchlistRoutes);
 
