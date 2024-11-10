@@ -7,8 +7,10 @@ import { Toaster } from "react-hot-toast";
 import WatchList from "./Components/WatchList/WatchList";
 export default function App()
 {
+ 
   return (
     <>
+    
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/signup" element={<Signup/>}/>
