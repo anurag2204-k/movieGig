@@ -1,6 +1,6 @@
-import Card from "./Card";
+
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useAuthContext } from "../../context/AuthContext";
 import useLogout from "../../hooks/useLogout";
 import axios from "axios";
@@ -9,8 +9,7 @@ import Footer from "../HomePage/Footer";
 
 function LandingPage() {
 
-    const [isAvaliable, setIsAvaliable] =useState(true);
-    const { authUser, isLoading } = useAuthContext();
+    const { authUser} = useAuthContext();
 	const {logout}= useLogout();
 		const handleLogout	= async()=>{
 		await logout()
@@ -22,7 +21,6 @@ function LandingPage() {
                 const res = await axios.get("https://www.themoviedb.org");
                 if(res.status!==200)
                 {
-                    setIsAvaliable(false);
                     toast.error("https://www.themoviedb.org is not reachable through your service provider")
                 }
                     

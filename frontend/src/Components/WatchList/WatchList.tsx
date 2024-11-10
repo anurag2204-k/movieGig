@@ -32,7 +32,6 @@ interface movieProps {
 const WatchList = () => {
     const { authUser } = useAuthContext();
     const userId = authUser ? authUser.id : null;
-    const [loading, setLoading] = useState(false);
     const [ray, setRay] = useState<movieProps[]>([])
     const [isMenuVisible, setIsMenuVisible] = useState(false);
     const [movieRemove,setMovieRemove] = useState(false);
@@ -42,7 +41,7 @@ const WatchList = () => {
     const removeItem = async (itemId: string) => {
         
         try {
-            const res = await axios.put("http://localhost:3000/api/watchlist/remove", {
+            const res = await axios.put("api/watchlist/remove", {
                 id: itemId
             }, {
                 withCredentials: true
@@ -65,8 +64,7 @@ const WatchList = () => {
     useEffect(() => {
         const getList = async () => {
             try {
-                setLoading(true);
-                const res = await axios.get("http://localhost:3000/api/watchlist/list", {
+                const res = await axios.get("/api/watchlist/list", {
                     withCredentials: true,
                 });
 
@@ -80,7 +78,6 @@ const WatchList = () => {
             } catch (error) {
                 console.error("Error in list function:", error);
             } finally {
-                setLoading(false);
                 console.log("raoy", ray) // End loading state
             }
         };

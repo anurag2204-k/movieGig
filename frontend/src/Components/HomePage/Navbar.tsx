@@ -1,6 +1,5 @@
 import React from "react";
 import User from "../../assets/user.svg";
-import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuthContext } from "../../context/AuthContext";
 import toast from "react-hot-toast";
@@ -11,7 +10,7 @@ interface NavbarProps {
 }
 
 const Navbar = ({ isMenuVisible, setIsMenuVisible }: NavbarProps) => {
-
+	const one = isMenuVisible;
 	const { authUser } = useAuthContext();
 
 	const handleClick = () => {
@@ -23,6 +22,7 @@ const Navbar = ({ isMenuVisible, setIsMenuVisible }: NavbarProps) => {
 	};
 
 	const toggleMenu = () => {
+		one
 		setIsMenuVisible(isMenuVisible => !isMenuVisible);
 	};
 

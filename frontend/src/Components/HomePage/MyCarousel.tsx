@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import { useAuthContext } from "../../context/AuthContext";
 import toast from "react-hot-toast";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 interface movieProps {
 	name:string;
@@ -34,7 +33,7 @@ const MyCarousel = ({movies}:myCarouselProps) => {
 	const length = movies.length;
 	const {authUser}=useAuthContext();
 	const userId= authUser? authUser.id:null;
-	const navigate=  useNavigate()
+	
 	// const token = localStorage.getItem("token"); // Ensure token is retrieved from localStorage
 
 	const goToTab=(movie:movieProps)=>{
@@ -61,7 +60,7 @@ const MyCarousel = ({movies}:myCarouselProps) => {
 		  }
 	  
 		  const response = await axios.post(
-			"http://localhost:3000/api/watchlist/add",
+			"/api/watchlist/add",
 			{ movie, userId },
 			{ withCredentials: true }  // Ensure cookies are sent with the request
 		  );
